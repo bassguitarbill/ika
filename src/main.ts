@@ -1,1 +1,3 @@
-console.log("Hello, world! Squid here!")
+import { uToE } from './IkaStr.js'
+
+console.log(uToE("く"))
