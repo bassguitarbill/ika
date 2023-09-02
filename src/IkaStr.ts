@@ -1,4 +1,5 @@
-export type IkaStr = Array<string | [string, string]>
+export type IkaChunk = string | [string, string]
+export type IkaStr = Array<IkaChunk>
 
 export function uToE(kana: string) {
   switch(kana) {
@@ -56,6 +57,33 @@ const hiraganaChart: { [key: string]: { [key: string]: verbEndingKana } } = [
 console.log(hiraganaChart)
 console.log("く with an O", hiraganaChart.く.o)
 
+export function ikaStringToHTMLString(ikaString: IkaStr): string {
+  return ikaString.reduce((acc: string, x: IkaChunk) => {
+    if (typeof x !== 'string') {
+      return `${acc}<ruby>${x[0]}<rp>(</rp><rt>${x[1]}</rt><rp>)</rp></ruby>`
+    } 
+    return `${acc}${x}`
+  }, "")
+}
+
+export function ikaStringToKana(ikaString: IkaStr): string {
+  return ikaString.reduce((acc: string, x: IkaChunk) => {
+    if (typeof x !== 'string') {
+      return `${acc}${x[1]}`
+    } 
+    return `${acc}${x}`
+  }, "")
+}
+
+export function ikaStringToKanji(ikaString: IkaStr): string {
+  return ikaString.reduce((acc: string, x: IkaChunk) => {
+    if (typeof x !== 'string') {
+      return `${acc}${x[0]}`
+    } 
+    return `${acc}${x}`
+  }, "")
+}
+
 export enum IkaVerbType {
   Ichidan,
   Godan,
@@ -70,17 +98,25 @@ export class IkaVerb {
   constructor(
     public dictionaryForm: IkaStr, 
     public verbType: IkaVerbType,
-    public exceptions: IkaVerbExceptions
+    public exceptions?: IkaVerbExceptions
   ) {}
 
-  positivePresentLongForm(): IkaStr {
+  get lastChar(): string {
+    return this.dictionaryForm.slice(-1)[0] as string
+  }
+
+  get stem() {
     switch(this.verbType) {
       case IkaVerbType.Ichidan:
-	return ["a"]
+	return this.dictionaryForm.slice(0, -1)
       case IkaVerbType.Godan:
-	return ["b"]
+        return this.dictionaryForm.slice(0, -1).concat([hiraganaChart[this.lastChar].i])
       case IkaVerbType.Irregular:
 	return ["c"]
     }
+  }
+
+  get positivePresentLongForm(): IkaStr {
+    return this.stem.concat(["ます"])
   }
 }
