@@ -151,4 +151,25 @@ export class IkaVerb {
     const last = (presNegShort[presNegShort.length - 1] as String).replace("い", "かった")
     return presNegShort.slice(0, -1).concat(last)
   }
+
+  get desire(): IkaStr {
+    return this.stem.concat(["たい"])
+  }
+
+  get potential(): IkaStr {
+    switch(this.verbType) {
+      case IkaVerbType.Ichidan:
+	return this.dictionaryForm.slice(0, -1).concat(["られる"])
+      case IkaVerbType.Godan:
+        return this.dictionaryForm.slice(0, -1).concat([hiraganaChart[this.lastChar].e]).concat(["る"])
+      case IkaVerbType.Irregular:
+	if (this.isSuru)
+	    return this.irregularStem(["できる"])
+	if (this.isKuru)
+	    return this.irregularStem(["こられる"])
+
+      console.error(`Invalid verb ${this.dictionaryForm}`)
+      return []
+    }
+  }
 }
