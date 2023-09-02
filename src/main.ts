@@ -28,3 +28,46 @@ console.dir(kuru.presentNegativeLongForm)
 const study = new IkaVerb([["勉","べん"], ["強","きょう"], "す","る"], IkaVerbType.Irregular)
 console.dir(ikaStringToKanji(study.presentAffirmativeLongForm))
 console.dir(ikaStringToKanji(study.presentNegativeLongForm))
+
+const verbs = [
+  new IkaVerb([["食", "た"], "べ", "る"], IkaVerbType.Ichidan),
+  new IkaVerb([["会", "あ"], "う"], IkaVerbType.Godan),
+  new IkaVerb([["待", "ま"], "つ"], IkaVerbType.Godan),
+  new IkaVerb(["と", "る"], IkaVerbType.Godan),
+  new IkaVerb([["読", "よ"], "む"], IkaVerbType.Godan),
+  new IkaVerb([["遊", "あそ"], "ぶ"], IkaVerbType.Godan),
+  new IkaVerb([["死", "し"], "ぬ"], IkaVerbType.Godan),
+  new IkaVerb([["書", "か"], "く"], IkaVerbType.Godan),
+  new IkaVerb([["行", "い"], "く"], IkaVerbType.Godan, { te: [["行", "い"], "って"] }),
+  new IkaVerb([["泳", "およ"], "ぐ"], IkaVerbType.Godan),
+  new IkaVerb([["話", "はな"], "す"], IkaVerbType.Godan),
+  new IkaVerb(["す", "る"], IkaVerbType.Irregular),
+  new IkaVerb([["来", "く"], "る"], IkaVerbType.Irregular),
+]
+
+const table = document.createElement("table")
+document.body.appendChild(table)
+
+const headerRow = document.createElement("tr")
+table.appendChild(headerRow)
+
+const dict = document.createElement("th")
+dict.innerHTML = "Dictionary Form"
+headerRow.appendChild(dict)
+
+const te = document.createElement("th")
+te.innerHTML = "Te Form"
+headerRow.appendChild(te)
+
+verbs.forEach(verb => {
+  const row = document.createElement("tr")
+  table.appendChild(row)
+
+  const dict = document.createElement("td")
+  dict.innerHTML = ikaStringToHTMLString(verb.dictionaryForm)
+  row.appendChild(dict)
+
+  const te = document.createElement("td")
+  te.innerHTML = ikaStringToHTMLString(verb.te)
+  row.appendChild(te)
+})
