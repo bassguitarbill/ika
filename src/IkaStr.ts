@@ -1,29 +1,6 @@
 export type IkaChunk = string | [string, string]
 export type IkaStr = Array<IkaChunk>
 
-export function uToE(kana: string) {
-  switch(kana) {
-  case "う":
-    return "え"
-  case "つ":
-    return "て"
-  case "る":
-    return "れ"
-  case "む":
-    return "め"
-  case "ぶ":
-    return "べ"
-  case "ぬ":
-    return "ね"
-  case "く":
-    return "け"
-  case "ぐ":
-    return "げ"
-  case "す":
-    return "せ"
-  }
-}
-
 type verbEndingKana =
 "あ" | "い" | "う" | "え" | "お" |
 "た" | "ち" | "つ" | "て" | "と" |
@@ -37,7 +14,7 @@ type verbEndingKana =
 
 type englishVowel = "a" | "i" | "u" | "e" | "o"
 
-const hiraganaChart: { [key: string]: { [key: string]: verbEndingKana } } = [
+export const hiraganaChart: { [key: string]: { [key: string]: verbEndingKana } } = [
   ["あ", "い", "う", "え", "お"],
   ["た", "ち", "つ", "て", "と"],
   ["ら", "り", "る", "れ", "ろ"],
@@ -53,9 +30,6 @@ const hiraganaChart: { [key: string]: { [key: string]: verbEndingKana } } = [
     return Object.assign(acc2, { [character]: expandedRow })
   }, {}))
 }, {})
-
-console.log(hiraganaChart)
-console.log("く with an O", hiraganaChart.く.o)
 
 export function ikaStringToHTMLString(ikaString: IkaStr): string {
   return ikaString.reduce((acc: string, x: IkaChunk) => {
@@ -84,39 +58,3 @@ export function ikaStringToKanji(ikaString: IkaStr): string {
   }, "")
 }
 
-export enum IkaVerbType {
-  Ichidan,
-  Godan,
-  Irregular
-}
-
-export type IkaVerbExceptions = {
-  te: IkaStr,
-}
-
-export class IkaVerb {
-  constructor(
-    public dictionaryForm: IkaStr, 
-    public verbType: IkaVerbType,
-    public exceptions?: IkaVerbExceptions
-  ) {}
-
-  get lastChar(): string {
-    return this.dictionaryForm.slice(-1)[0] as string
-  }
-
-  get stem() {
-    switch(this.verbType) {
-      case IkaVerbType.Ichidan:
-	return this.dictionaryForm.slice(0, -1)
-      case IkaVerbType.Godan:
-        return this.dictionaryForm.slice(0, -1).concat([hiraganaChart[this.lastChar].i])
-      case IkaVerbType.Irregular:
-	return ["c"]
-    }
-  }
-
-  get positivePresentLongForm(): IkaStr {
-    return this.stem.concat(["ます"])
-  }
-}

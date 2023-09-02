@@ -1,4 +1,5 @@
-import { IkaVerb, IkaVerbType, ikaStringToHTMLString } from './IkaStr.js'
+import { ikaStringToHTMLString } from './IkaStr.js'
+import { IkaVerb, IkaVerbType } from './IkaVerb.js'
 
 const tabemasu = new IkaVerb(
   [["食", "た"], "べ", "る"],
