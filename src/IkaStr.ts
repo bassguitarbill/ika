@@ -26,6 +26,7 @@ export const hiraganaChart: { [key: string]: { [key: string]: verbEndingKana } }
   ["さ", "し", "す", "せ", "そ"],
 ].reduce((acc, row) => {
   const expandedRow = { a: row[0], i: row[1], u: row[2], e: row[3], o: row[4] }
+  if (row[0] === "あ") expandedRow.a = "わ"
   return Object.assign(acc, row.reduce((acc2, character) => {
     return Object.assign(acc2, { [character]: expandedRow })
   }, {}))

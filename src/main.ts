@@ -59,6 +59,18 @@ const te = document.createElement("th")
 te.innerHTML = "Te Form"
 headerRow.appendChild(te)
 
+const shortPresNeg = document.createElement("th")
+shortPresNeg.innerHTML = "Short Negative"
+headerRow.appendChild(shortPresNeg)
+
+const shortPastAff = document.createElement("th")
+shortPastAff.innerHTML = "Short Past Affirmative"
+headerRow.appendChild(shortPastAff)
+
+const shortPastNeg = document.createElement("th")
+shortPastNeg.innerHTML = "Short Past Negative"
+headerRow.appendChild(shortPastNeg)
+
 verbs.forEach(verb => {
   const row = document.createElement("tr")
   table.appendChild(row)
@@ -70,4 +82,17 @@ verbs.forEach(verb => {
   const te = document.createElement("td")
   te.innerHTML = ikaStringToHTMLString(verb.te)
   row.appendChild(te)
+
+  const shortPresNeg = document.createElement("td")
+  shortPresNeg.innerHTML = ikaStringToHTMLString(verb.presentNegativeShortForm)
+  row.appendChild(shortPresNeg)
+
+  const shortPastAff = document.createElement("td")
+  shortPastAff.innerHTML = ikaStringToHTMLString(verb.pastAffirmativeShortForm)
+  row.appendChild(shortPastAff)
+
+  const shortPastNeg = document.createElement("td")
+  shortPastNeg.innerHTML = ikaStringToHTMLString(verb.pastNegativeShortForm)
+  row.appendChild(shortPastNeg)
+
 })
