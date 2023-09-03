@@ -1,6 +1,11 @@
 import { ikaStringToHTMLString, ikaStringToKanji } from './IkaStr.js'
 import { IkaVerb, IkaVerbType } from './IkaVerb.js'
 
+document.addEventListener("DOMContentLoaded", () => {
+  generateTable()
+  setupFuriganaToggle()
+})
+
 const verbs = [
   new IkaVerb([["食", "た"], "べ", "る"], IkaVerbType.Ichidan),
   new IkaVerb([["会", "あ"], "う"], IkaVerbType.Godan),
@@ -28,25 +33,40 @@ const forms = [
 "potential",
 ]
 
-const table = document.createElement("table")
-document.body.appendChild(table)
+function generateTable() {
+  const table = document.createElement("table")
+  document.body.appendChild(table)
 
-const headerRow = document.createElement("tr")
-table.appendChild(headerRow)
-
-forms.forEach((form: string) => {
-  const th = document.createElement("th")
-  th.innerHTML = form 
-  headerRow.appendChild(th)
-})
-
-verbs.forEach(verb => {
-  const row = document.createElement("tr")
-  table.appendChild(row)
+  const headerRow = document.createElement("tr")
+  table.appendChild(headerRow)
 
   forms.forEach((form: string) => {
-    const td = document.createElement("td")
-    td.innerHTML = ikaStringToHTMLString(verb[form])
-    row.appendChild(td)
+    const th = document.createElement("th")
+    th.innerHTML = form 
+    headerRow.appendChild(th)
   })
-})
+
+  verbs.forEach(verb => {
+    const row = document.createElement("tr")
+    table.appendChild(row)
+
+    forms.forEach((form: string) => {
+      const td = document.createElement("td")
+      td.innerHTML = ikaStringToHTMLString(verb[form],false)
+      row.appendChild(td)
+    })
+  })
+}
+
+function setupFuriganaToggle() {
+  const furiganaToggle = document.querySelector("#furiganaToggle")
+
+  furiganaToggle.addEventListener("change", e => {
+    document.querySelectorAll(".ikaStringNoFurigana").forEach(el => {
+      e.target.checked ? el.classList.add("hidden") : el.classList.remove("hidden")
+    })
+    document.querySelectorAll(".ikaStringFurigana").forEach(el => {
+      e.target.checked ? el.classList.remove("hidden") : el.classList.add("hidden")
+    })
+  })
+}
