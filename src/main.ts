@@ -1,5 +1,6 @@
-import { ikaStringToHTMLString, ikaStringToKanji } from './IkaStr.js'
-import { IkaVerb, IkaVerbType } from './IkaVerb.js'
+import { ikaStringToHTMLString, ikaStringToKanji, IkaStr } from './IkaStr.js'
+import { IkaVerb, IkaVerbType, verbForm } from './IkaVerb.js'
+import { setupFuriganaToggle } from './furiganaToggle.js'
 
 document.addEventListener("DOMContentLoaded", () => {
   generateTable()
@@ -23,7 +24,7 @@ const verbs = [
   new IkaVerb([["来", "く"], "る"], IkaVerbType.Irregular),
 ]
 
-const forms = [
+const forms: Array<verbForm> = [
 "dictionaryForm",
 "te",
 "presentNegativeShortForm",
@@ -50,23 +51,10 @@ function generateTable() {
     const row = document.createElement("tr")
     table.appendChild(row)
 
-    forms.forEach((form: string) => {
+    forms.forEach((form) => {
       const td = document.createElement("td")
-      td.innerHTML = ikaStringToHTMLString(verb[form],false)
+      td.innerHTML = ikaStringToHTMLString(verb[form] as IkaStr)
       row.appendChild(td)
-    })
-  })
-}
-
-function setupFuriganaToggle() {
-  const furiganaToggle = document.querySelector("#furiganaToggle")
-
-  furiganaToggle.addEventListener("change", e => {
-    document.querySelectorAll(".ikaStringNoFurigana").forEach(el => {
-      e.target.checked ? el.classList.add("hidden") : el.classList.remove("hidden")
-    })
-    document.querySelectorAll(".ikaStringFurigana").forEach(el => {
-      e.target.checked ? el.classList.remove("hidden") : el.classList.add("hidden")
     })
   })
 }
