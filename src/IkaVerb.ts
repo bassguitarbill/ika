@@ -1,5 +1,18 @@
 import { IkaStr, hiraganaChart } from './IkaStr.js'
+
 export type verbForm = "dictionaryForm" | "te" | "presentNegativeShortForm" | "pastAffirmativeShortForm" | "pastNegativeShortForm" | "desire" | "potential"
+
+// TODO [key: verbForm]
+export const verbForms: { [key: string]: string } = {
+  "dictionaryForm": "dictionary",
+  "te": "te",
+  "presentNegativeShortForm": "present negative short",
+  "pastAffirmativeShortForm": "past affirmative short",
+  "pastNegativeShortForm": "past negative short",
+  "desire": "desire",
+  "potential": "potential",
+}
+
 export enum IkaVerbType {
   Ichidan,
   Godan,

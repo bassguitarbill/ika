@@ -1,5 +1,5 @@
 import { ikaStringToHTMLString, ikaStringToKanji } from './IkaStr.js'
-import { IkaVerb, IkaVerbType, verbForm } from './IkaVerb.js'
+import { IkaVerb, IkaVerbType, verbForm, verbForms } from './IkaVerb.js'
 import { setupFuriganaToggle } from './furiganaToggle.js'
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -30,7 +30,7 @@ const verbs = [
 ]
 
 const forms: Array<verbForm> = [
-"dictionaryForm",
+  // "dictionaryForm",
 "te",
 "presentNegativeShortForm",
 "pastAffirmativeShortForm",
@@ -60,10 +60,10 @@ function askQuestion() {
   currentVerb = chooseFrom(verbs)
   currentForm = chooseFrom(forms)
 
-  const prompt= `<span>What is the ${currentForm} form of ${ikaStringToHTMLString(currentVerb.dictionaryForm)}?</span>`
+  const prompt= `<span>What is the ${verbForms[currentForm]} form of ${ikaStringToHTMLString(currentVerb.dictionaryForm)}?</span>`
   document.querySelector("#prompt")!.innerHTML = prompt
   document.querySelector("#answer")!.innerHTML = ""
-  document.querySelector("#nextQuestion")!.remove()
+  document.querySelector("#nextQuestion")?.remove()
 }
 
 function showAnswer() {
