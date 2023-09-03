@@ -1,3 +1,5 @@
+#!/usr/bin/bash
+
 # Delete existing bundled folder
 rm -rf ika
 
