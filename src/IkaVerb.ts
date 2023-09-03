@@ -147,7 +147,7 @@ export class IkaVerb {
 	if (this.isSuru)
 	    return this.irregularStem(["しない"])
 	if (this.isKuru)
-	    return this.irregularStem(["こない"])
+	    return this.irregularStem([["来","こ"], "ない"])
 
       console.error(`Invalid verb ${this.dictionaryForm}`)
       return []
