@@ -36,7 +36,7 @@ const forms: Array<verbForm> = [
 
 function generateTable() {
   const table = document.createElement("table")
-  document.body.appendChild(table)
+  document.querySelector("#dictionary")!.appendChild(table)
 
   const headerRow = document.createElement("tr")
   table.appendChild(headerRow)

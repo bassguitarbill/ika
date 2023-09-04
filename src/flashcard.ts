@@ -65,6 +65,9 @@ function askQuestion() {
   document.querySelector("#answer")!.innerHTML = ""
   document.querySelector("#nextQuestion")?.remove()
   toggleFurigana()
+
+  const githubIssueLink = document.querySelector("#currentPromptIssueURL")!
+  githubIssueLink.setAttribute("href", githubIssueUrl())
 }
 
 function showAnswer() {
@@ -78,7 +81,6 @@ function showAnswer() {
     button.addEventListener("click", askQuestion)
     document.querySelector("#quiz")!.appendChild(button)
   }
-
   toggleFurigana()
 }
 
@@ -98,4 +100,12 @@ function setupFlashcards() {
   const answer = document.createElement("div")
   answer.id = "answer"
   quiz.appendChild(answer)
+}
+
+function githubIssueUrl(): string {
+  const dictionary = ikaStringToKanji(currentVerb.dictionaryForm)
+  const form = verbForms[currentForm]
+  const conjugated = ikaStringToKanji(currentVerb[currentForm])
+  const title = encodeURI(`${dictionary} in ${form} form shows as ${conjugated}`)
+  return `https://github.com/bassguitarbill/ika/issues/new?title=${title}&assignees=bassguitarbill`
 }
