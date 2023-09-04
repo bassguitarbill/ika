@@ -35,9 +35,9 @@ export const hiraganaChart: { [key: string]: { [key: string]: verbEndingKana } }
 export function ikaStringToHTMLString(ikaString: IkaStr): string {
   return ikaString.reduce((acc: string, x: IkaChunk) => {
     if (typeof x !== 'string') {
-      return `${acc}<ruby class="ikaStringFurigana">${x[0]}<rp>(</rp><rt>${x[1]}</rt><rp>)</rp></ruby><span class="ikaStringNoFurigana hidden">${x[0]}</span>`
+      return `${acc}<ruby class="ikaString ikaStringFurigana">${x[0]}<rp>(</rp><rt>${x[1]}</rt><rp>)</rp></ruby><span class="ikaString ikaStringNoFurigana hidden">${x[0]}</span>`
     } 
-    return `${acc}${x}`
+    return `${acc}<span class="ikaString">${x}</span>`
   }, "")
 }
 
