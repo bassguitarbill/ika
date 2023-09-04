@@ -71,12 +71,14 @@ function showAnswer() {
   const answer = ikaStringToHTMLString(currentVerb[currentForm])
   document.querySelector("#answer")!.innerHTML = answer
 
-  const button = document.createElement("button")
-  button.id = "nextQuestion"
-  button.innerText = "Next Question"
-  button.addEventListener("click", askQuestion)
+  if (!document.querySelector("#nextQuestion")) {
+    const button = document.createElement("button")
+    button.id = "nextQuestion"
+    button.innerText = "Next Question"
+    button.addEventListener("click", askQuestion)
+    document.querySelector("#quiz")!.appendChild(button)
+  }
 
-  document.querySelector("#quiz")!.appendChild(button)
   toggleFurigana()
 }
 
