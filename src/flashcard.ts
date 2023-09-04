@@ -1,6 +1,6 @@
 import { ikaStringToHTMLString, ikaStringToKanji } from './IkaStr.js'
 import { IkaVerb, IkaVerbType, verbForm, verbForms } from './IkaVerb.js'
-import { setupFuriganaToggle } from './furiganaToggle.js'
+import { setupFuriganaToggle, toggleFurigana } from './furiganaToggle.js'
 
 document.addEventListener("DOMContentLoaded", () => {
   setupFlashcards()
@@ -64,6 +64,7 @@ function askQuestion() {
   document.querySelector("#prompt")!.innerHTML = prompt
   document.querySelector("#answer")!.innerHTML = ""
   document.querySelector("#nextQuestion")?.remove()
+  toggleFurigana()
 }
 
 function showAnswer() {
@@ -76,6 +77,7 @@ function showAnswer() {
   button.addEventListener("click", askQuestion)
 
   document.querySelector("#quiz")!.appendChild(button)
+  toggleFurigana()
 }
 
 function setupFlashcards() {
