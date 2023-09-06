@@ -1,11 +1,11 @@
 import { ikaStringToHTMLString,  IkaStr } from './IkaStr.js'
 import { IkaVerb, verbForm, verbForms } from './IkaVerb.js'
 import { setupFuriganaToggle } from './furiganaToggle.js'
-import loadDictionary from './loadDictionary.js'
+import loadDictionary, { Dictionary } from './loadDictionary.js'
 
 document.addEventListener("DOMContentLoaded", () => {
   setupFuriganaToggle()
-  loadDictionary().then(dict => generateTable(dict.verbs["Example"]))
+  loadDictionary().then(dict => generateTable(dict))
 })
 
 const forms: Array<verbForm> = [
@@ -18,7 +18,9 @@ const forms: Array<verbForm> = [
 "potential",
 ]
 
-function generateTable(verbs: Array<IkaVerb>) {
+function generateTable(dict: Dictionary) {
+  const verbCategories = Object.keys(dict.verbs).filter(category => category.includes("Genki"))
+  const verbs = verbCategories.reduce<Array<IkaVerb>>((acc, category) => acc.concat(dict.verbs[category]), [])
   const table = document.createElement("table")
   document.querySelector("#dictionary")!.appendChild(table)
 

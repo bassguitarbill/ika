@@ -1,6 +1,6 @@
 import { IkaStr } from './IkaStr.js'
 import { IkaVerb, IkaVerbExceptions, IkaVerbType } from './IkaVerb.js'
-type Dictionary = {
+export type Dictionary = {
   verbs: {
     [key: string]: Array<IkaVerb>
   }
