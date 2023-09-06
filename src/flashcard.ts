@@ -1,33 +1,18 @@
 import { ikaStringToHTMLString, ikaStringToKanji } from './IkaStr.js'
 import { IkaVerb, IkaVerbType, verbForm, verbForms } from './IkaVerb.js'
 import { setupFuriganaToggle, toggleFurigana } from './furiganaToggle.js'
+import loadDictionary from './loadDictionary.js'
 
+let verbs: Array<IkaVerb> = []
 document.addEventListener("DOMContentLoaded", () => {
-  setupFlashcards()
   setupFuriganaToggle()
+  loadDictionary().then(dict => setupFlashcards(dict.verbs["Example"]))
 })
 
 function chooseFrom<T>(arr: Array<T>): T {
   const index = Math.floor(Math.random() * arr.length)
   return arr[index]
 }
-
-const verbs = [
-  new IkaVerb([["食", "た"], "べ", "る"], IkaVerbType.Ichidan),
-  new IkaVerb([["会", "あ"], "う"], IkaVerbType.Godan),
-  new IkaVerb([["待", "ま"], "つ"], IkaVerbType.Godan),
-  new IkaVerb(["と", "る"], IkaVerbType.Godan),
-  new IkaVerb([["読", "よ"], "む"], IkaVerbType.Godan),
-  new IkaVerb([["遊", "あそ"], "ぶ"], IkaVerbType.Godan),
-  new IkaVerb([["死", "し"], "ぬ"], IkaVerbType.Godan),
-  new IkaVerb([["書", "か"], "く"], IkaVerbType.Godan),
-  new IkaVerb([["行", "い"], "く"], IkaVerbType.Godan, { te: [["行", "い"], "って"] }),
-  new IkaVerb([["泳", "およ"], "ぐ"], IkaVerbType.Godan),
-  new IkaVerb([["話", "はな"], "す"], IkaVerbType.Godan),
-  new IkaVerb(["す", "る"], IkaVerbType.Irregular),
-  new IkaVerb([["勉","べん"], ["強", "きょう"],"す", "る"], IkaVerbType.Irregular),
-  new IkaVerb([["来", "く"], "る"], IkaVerbType.Irregular),
-]
 
 const forms: Array<verbForm> = [
   // "dictionaryForm",
@@ -84,7 +69,8 @@ function showAnswer() {
   toggleFurigana()
 }
 
-function setupFlashcards() {
+function setupFlashcards(v: Array<IkaVerb>) {
+  verbs = v
   const quiz = document.querySelector("#quiz")!
 
   const button = document.createElement("button")
