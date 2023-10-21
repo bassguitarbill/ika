@@ -25,7 +25,7 @@ function transformVerbs(verbs: { [key: string]: Array<DictionaryRow> }): { [key:
 }
 
 export default async function loadDictionary(): Promise<Dictionary> {
-  return fetch('/dictionary.json')
+  return fetch('dictionary.json')
     .then(rsp => rsp.json())
     .then(dict => ({ ...dict, verbs: transformVerbs(dict.verbs) }))
 }

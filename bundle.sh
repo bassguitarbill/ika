@@ -14,3 +14,6 @@ cp *.css ika/
 
 # import js
 cp dist/*.js ika/dist
+
+# import the dictionary
+cp *.json ika/
